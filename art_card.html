@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #1a1a1a; font-family: sans-serif; }
+  #card { width: 600px; height: 800px; background: #000; display: flex; flex-direction: column; }
+  #canvas-container { width: 600px; height: 600px; }
+  #credit { width: 600px; height: 200px; background: #f0f0f0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  h1 { margin: 0; font-size: 24px; color: #333; }
+  p { margin: 5px 0 0; font-size: 16px; color: #666; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div id="canvas-container"><canvas id="art" width="600" height="600"></canvas></div>
+  <div id="credit">
+    <h1>Ethereal Pulse</h1>
+    <p>Artist: Starship Aurora</p>
+  </div>
+</div>
+<script>
+  const canvas = document.getElementById('art');
+  const ctx = canvas.getContext('2d');
+  let time = 0;
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, 600, 600);
+    const centerX = 300;
+    const centerY = 300;
+    for(let i=0; i<10; i++) {
+      const angle = time * 0.02 + i * 0.6;
+      const radius = 100 + Math.sin(time * 0.05 + i) * 50;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+      ctx.beginPath();
+      ctx.arc(x, y, 10 + Math.sin(time * 0.1) * 5, 0, Math.PI * 2);
+      ctx.fillStyle = `hsl(${(i * 36 + time * 2) % 360}, 70%, 60%)`;
+      ctx.fill();
+    }
+    time++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+</body>
+</html>
